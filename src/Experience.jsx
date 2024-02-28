@@ -90,9 +90,8 @@ const Experience = () => {
         truckGrp: buttonGroup({
             label: 'truck',
             opts: {
-                '(1,0)': () => cameraControlsRef.current?.truck(1, 0, true),
-                '(0,1)': () => cameraControlsRef.current?.truck(0, 1, true),
-                '(-1,-1)': () => cameraControlsRef.current?.truck(-1, -1, true)
+                'L1': () => cameraControlsRef.current?.truck(-1, 0, true),
+                'R1': () => cameraControlsRef.current?.truck(1, 0, true)
             }
         }),
         dollyGrp: buttonGroup({
