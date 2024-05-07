@@ -1,5 +1,5 @@
 import React, { useRef, useState, forwardRef } from 'react'
-import { useHelper, CameraControls, Center, useGLTF, Grid } from '@react-three/drei'
+import { useHelper, CameraControls, Center, useGLTF, Grid, useCubeTexture } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useControls, button, buttonGroup, folder } from 'leva'
 import { suspend } from 'suspend-react'
@@ -59,7 +59,10 @@ function Ground() {
     return <Grid position={[0, -0.01, 0]} args={[10.5, 10.5]} {...gridConfig} />
 }
 
+// const envMap = useCubeTexture(['textures/px.png', 'textures/nx.png', 'textures/py.png', 'textures/ny.png', 'textures/pz.png', 'textures/nz.png'], { path: 'cube/' })
+
 const Experience = () => {
+
 
     const directionalLightRef = useRef()
     const directionalLightRef2 = useRef()
@@ -157,15 +160,15 @@ const Experience = () => {
             <CameraPositionLogging event='mousedown' />
             {/* <CameraTargetLogging event='mousedown' /> */}
 
-            <Cylinder />
+            {/* <Cylinder /> */}
 
             <GlowingBall color={'green'} position={[0, -5, 0]} />
             <GlowingBall color={'red'} position={[-5, -5, 0]} />
             <GlowingBall color={'yellow'} position={[5, -5, 0]} />
 
-            <Capsule />
+            {/* <Capsule /> */}
 
-            <TorusKnot />
+            {/* <TorusKnot /> */}
 
             <Duckie />
 
@@ -188,7 +191,7 @@ const Experience = () => {
 
             <Ground />
 
-            <Artifact
+            {/* <Artifact
                 path={'/ToyCar/ToyCar.gltf'}
                 position={[0, 2, 5]}
                 scale={40}
@@ -285,6 +288,11 @@ const Experience = () => {
                 position={[0, 25, 0]}
                 scale={0.0015}
             />
+            <Artifact
+                path={'/2024_03_14-FLPinesTest-v1/2024_03_14-FLPinesTest.gltf'}
+                position={[0, -25, 0]}
+                scale={0.5}
+            /> */}
 
         </>
     )
