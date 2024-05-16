@@ -4,16 +4,17 @@ import { useThree } from '@react-three/fiber'
 import { useControls, button, buttonGroup, folder } from 'leva'
 import { suspend } from 'suspend-react'
 import CameraPositionLogging from './helpers/CameraPositionLogging'
+import CameraTargetLogging from './helpers/CameraTargetLogging'
 
 import * as THREE from 'three'
 
-import Cylinder from './scenes/Cylinder'
-import TorusKnot from './scenes/TorusKnot'
 import Duckie from './scenes/Duckie'
 import Barracuda from './scenes/Barracuda'
 import Capsule from './scenes/Capsule'
 import GlowingBall from './scenes/GlowingBall'
 import Artifact from './scenes/Artifact'
+import Octant from './scenes/octant'
+
 
 const suzi = import(`@pmndrs/assets/models/suzi.glb`)
 const george = import(`@pmndrs/assets/models/bunny.glb`)
@@ -31,16 +32,6 @@ const Suzi = forwardRef((props, ref) => {
     )
 })
 
-const George = forwardRef((props, ref) => {
-    const { nodes } = useGLTF(suspend(george).default)
-    return (
-        <>
-            <mesh ref={ref} castShadow receiveShadow geometry={nodes.mesh.geometry} {...props}>
-                <meshPhongMaterial shininess={100} specular={'rgb(255, 255, 255)'} color="hsl(240, 60%, 80%)" />
-            </mesh>
-        </>
-    )
-})
 
 
 function Ground() {
@@ -63,7 +54,6 @@ function Ground() {
 
 const Experience = () => {
 
-
     const directionalLightRef = useRef()
     const directionalLightRef2 = useRef()
     useHelper(directionalLightRef, THREE.DirectionalLightHelper, 1, 'red')
@@ -79,7 +69,8 @@ const Experience = () => {
             label: 'rotate theta',
             opts: {
                 '+45º': () => cameraControlsRef.current?.rotate(45 * DEG2RAD, 0, true),
-                '-90º': () => cameraControlsRef.current?.rotate(-90 * DEG2RAD, 0, true),
+                '+15º': () => cameraControlsRef.current?.rotate(15 * DEG2RAD, 0, true),
+                '-15º': () => cameraControlsRef.current?.rotate(-15 * DEG2RAD, 0, true),
                 '+180º': () => cameraControlsRef.current?.rotate(180 * DEG2RAD, 0, true)
             }
         }),
@@ -93,15 +84,15 @@ const Experience = () => {
         truckGrp: buttonGroup({
             label: 'truck',
             opts: {
-                'L1': () => cameraControlsRef.current?.truck(-1, 0, true),
-                'R1': () => cameraControlsRef.current?.truck(1, 0, true)
+                'L1': () => cameraControlsRef.current?.truck(-10, 0, true),
+                'R1': () => cameraControlsRef.current?.truck(10, 0, true)
             }
         }),
         dollyGrp: buttonGroup({
             label: 'dolly',
             opts: {
-                '+1': () => cameraControlsRef.current?.dolly(1, true),
-                '-1': () => cameraControlsRef.current?.dolly(-1, true)
+                '+10': () => cameraControlsRef.current?.dolly(10, true),
+                '-10': () => cameraControlsRef.current?.dolly(-10, true)
             }
         }),
         zoomGrp: buttonGroup({
@@ -126,12 +117,13 @@ const Experience = () => {
             },
             { collapsed: true }
         ),
-        saveState: button(() => cameraControlsRef.current?.saveState()),
+        // saveState: button(() => cameraControlsRef.current?.saveState()),
         reset: button(() => cameraControlsRef.current?.reset(true)),
 
-        lookatCuda: button(() => cameraControlsRef.current?.setLookAt(8, 3, -9, 0, 0, -10, true)),
-        lookatDuckie: button(() => cameraControlsRef.current?.setLookAt(5.6, 1.1, 11.5, 0, 1, 10, true)),
-        lookatGeorgie: button(() => cameraControlsRef.current?.setLookAt(1.5, 11.5, 1.5, 0, 10, 0, true)),
+        lookatPlan: button(() => cameraControlsRef.current?.setLookAt(30.32, 324.3, -0.19, 30.32, 323.3, -0.19, true)),
+        lookatYellow: button(() => cameraControlsRef.current?.setLookAt(180.84, 15.55, -38.27, 180.26, 15.44, -37.46, true)),
+        lookatRed: button(() => cameraControlsRef.current?.setLookAt(183.46, 10.31, -11.97,182.46, 10.26, -11.96, true)),
+        lookatBlue: button(() => cameraControlsRef.current?.setLookAt(187.15, 34.34, 49.26, 186.66, 34.11, 48.43, true)),
 
         enabled: { value: true, label: 'controls on' }
     })
@@ -144,7 +136,7 @@ const Experience = () => {
             <directionalLight
                 castShadow
                 ref={directionalLightRef}
-                position={[0, 20, 30]}
+                position={[0, 200, 300]}
                 intensity={2}
                 color={'rgb(200, 0, 0)'}
             />
@@ -152,27 +144,48 @@ const Experience = () => {
             <directionalLight
                 castShadow
                 ref={directionalLightRef2}
-                position={[0, 20, -30]}
+                position={[0, 200, -300]}
                 intensity={1}
                 color={'rgb(0, 200, 0)'}
             />
 
             <CameraPositionLogging event='mousedown' />
-            {/* <CameraTargetLogging event='mousedown' /> */}
+            <CameraTargetLogging event='mousedown' />
 
             {/* <Cylinder /> */}
 
-            <GlowingBall color={'green'} position={[0, -5, 0]} />
+            {/* <GlowingBall color={'green'} position={[0, -5, 0]} />
             <GlowingBall color={'red'} position={[-5, -5, 0]} />
-            <GlowingBall color={'yellow'} position={[5, -5, 0]} />
+            <GlowingBall color={'yellow'} position={[5, -5, 0]} /> */}
 
             {/* <Capsule /> */}
 
             {/* <TorusKnot /> */}
 
-            <Duckie />
+            {/* <Duckie /> */}
 
-            <Barracuda />
+            {/* <Barracuda /> */}
+
+            <Octant 
+                position={[72, 0, -120]}
+                position2={[90, 0, -90]}
+                color={'blue'}
+                rotation={-45}
+            />
+
+            <Octant 
+                position={[0, 0, 0]}
+                position2={[40, 0, 0]}
+                color={'red'}
+                rotation={0}
+            />
+
+            <Octant 
+                position={[72, 0, 120]}
+                position2={[90, 0, 90]}
+                color={'yellow'}
+                rotation={45}
+            />
 
             <CameraControls
                 ref={cameraControlsRef}
@@ -183,13 +196,13 @@ const Experience = () => {
                 smoothTime={0.5}
             />
 
-            <Center top>
+            {/* <Center top>
                 <Suzi ref={meshRef} rotation={[-0.63, 0, 0]} />
-            </Center>
+            </Center> */}
 
-            <George position={[0, 10, 0]} />
+            {/* <George position={[0, 10, 0]} /> */}
 
-            <Ground />
+            {/* <Ground /> */}
 
             {/* <Artifact
                 path={'/ToyCar/ToyCar.gltf'}

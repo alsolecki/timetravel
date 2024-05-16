@@ -22,7 +22,7 @@ function CameraTargetLogging({ event }) {
             const roundX = Math.round(x * 100) / 100
             const roundY = Math.round(y * 100) / 100
             const roundZ = Math.round(z * 100) / 100
-            console.log(`Camera target: x: ${roundX}, y: ${roundY}, z: ${roundZ}`)
+            console.log(`Camera target: ${roundX}, ${roundY}, ${roundZ}`)
         }
 
         cameraRef.current = camera
